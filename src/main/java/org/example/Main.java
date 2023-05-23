@@ -34,10 +34,14 @@ public class Main {
         CloseableHttpResponse response = httpClient.execute(request);
         Arrays.stream(response.getAllHeaders()).forEach(System.out::println);
 
-            List<Post> participantJsonList = mapper.readValue(response.getEntity().getContent(), new TypeReference<>(){});
-            participantJsonList.forEach(System.out::println);
+        List<Post> posts = mapper.readValue(
+                response.getEntity().getContent(), new
+                        TypeReference<>() {});
+            posts.forEach(System.out::println);
 
-            response.close();
-            httpClient.close();
+
+            posts.stream()
+                            .filter((value -> value.getUpvotes() != null && value.getUpvotes() > 0));
+            posts.forEach(System.out::println);
     }
 }
